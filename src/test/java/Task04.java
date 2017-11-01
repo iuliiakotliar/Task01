@@ -4,9 +4,12 @@ import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -15,118 +18,98 @@ public class Task04 {
 
     @Test
     public void chromeTest() {
-        //create driver
         ChromeDriverManager.getInstance().setup();
         WebDriver driver = new ChromeDriver();
         driver.get("http://localhost/litecart");
-        //get all the needed attributes' values on the main page
-        String productNameMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[2]")).getAttribute("textContent");
-        String regularPriceMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getAttribute("textContent");
-        String discountPriceMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getAttribute("textContent");
-        String regularPriceColorMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getCssValue("color");
-        String regularPriceStrikeThroughMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getCssValue("text-decoration");
-        String discountPriceColorMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getCssValue("color");
-        String discountPriceBoldMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getCssValue("font-weight");
-        //click on the item
-        driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[1]/img")).click();
-        //get all the needed attributes' values on the item page
-        String productNameIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[1]/h1")).getAttribute("textContent");
-        String regularPriceIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getAttribute("textContent");
-        String discountPriceIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getAttribute("textContent");
-        String regularPriceColorIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getCssValue("color");
-        String regularPriceStrikeThroughIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getCssValue("text-decoration");
-        String discountPriceColorIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getCssValue("color");
-        String discountPriceBoldIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getCssValue("font-weight");
+        List<String> els = getMainPageElements(driver);
+        driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]//img")).click();
+        List<String> elsItem = getItemPageElements(driver);
 
-        assertEquals(productNameMP, productNameIP);
-        assertEquals(regularPriceMP, regularPriceIP);
-        assertEquals(discountPriceMP, discountPriceIP);
-        assertEquals("rgba(119, 119, 119, 1)", regularPriceColorMP);
-        assertEquals("rgba(102, 102, 102, 1)", regularPriceColorIP);
-        assertTrue(regularPriceStrikeThroughMP.contains("line-through"));
-        assertTrue(regularPriceStrikeThroughIP.contains("line-through"));
-        assertEquals(discountPriceColorMP, discountPriceColorIP);
-        assertEquals(discountPriceBoldMP, discountPriceBoldIP);
+        assertEquals(els.get(0), elsItem.get(0));
+        assertEquals(els.get(1), elsItem.get(1));
+        assertEquals(els.get(2), elsItem.get(2));
+        assertEquals("rgba(119, 119, 119, 1)", els.get(3));
+        assertEquals("rgba(102, 102, 102, 1)", elsItem.get(3));
+        assertTrue(els.get(4).contains("line-through"));
+        assertTrue(elsItem.get(4).contains("line-through"));
+        assertEquals(els.get(5), elsItem.get(5));
+        assertEquals(els.get(6), elsItem.get(6));
 
         driver.quit();
     }
 
     @Test
     public void firefoxTest(){
-        //create driver
         FirefoxDriverManager.getInstance().setup();
         WebDriver driver = new FirefoxDriver();
         driver.get("http://localhost/litecart");
-        //get all the needed attributes' values on the main page
-        String productNameMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[2]")).getAttribute("textContent");
-        String regularPriceMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getAttribute("textContent");
-        String discountPriceMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getAttribute("textContent");
-        String regularPriceColorMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getCssValue("color");
-        String regularPriceStrikeThroughMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getCssValue("text-decoration");
-        String discountPriceColorMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getCssValue("color");
-        String discountPriceBoldMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getCssValue("font-weight");
-        //click on the item
+        List<String> els = getMainPageElements(driver);
         driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[1]/img")).click();
-        //get all the needed attributes' values on the item page
-        String productNameIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[1]/h1")).getAttribute("textContent");
-        String regularPriceIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getAttribute("textContent");
-        String discountPriceIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getAttribute("textContent");
-        String regularPriceColorIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getCssValue("color");
-        String regularPriceStrikeThroughIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getCssValue("text-decoration");
-        String discountPriceColorIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getCssValue("color");
-        String discountPriceBoldIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getCssValue("font-weight");
+        List<String> elsItem = getItemPageElements(driver);
 
-        assertEquals(productNameMP, productNameIP);
-        assertEquals(regularPriceMP, regularPriceIP);
-        assertEquals(discountPriceMP, discountPriceIP);
-        assertEquals("rgb(119, 119, 119)", regularPriceColorMP);
-        assertEquals("rgb(102, 102, 102)", regularPriceColorIP);
-        assertTrue(regularPriceStrikeThroughMP.contains("line-through"));
-        assertTrue(regularPriceStrikeThroughIP.contains("line-through"));
-        assertEquals(discountPriceColorMP, discountPriceColorIP);
-        assertTrue(Integer.parseInt(discountPriceBoldMP) >= 600);
-        assertTrue(Integer.parseInt(discountPriceBoldIP) >= 600);
+        assertEquals(els.get(0), elsItem.get(0));
+        assertEquals(els.get(1), elsItem.get(1));
+        assertEquals(els.get(2), elsItem.get(2));
+        assertEquals("rgb(119, 119, 119)", els.get(3));
+        assertEquals("rgb(102, 102, 102)", elsItem.get(3));
+        assertTrue(els.get(4).contains("line-through"));
+        assertTrue(elsItem.get(4).contains("line-through"));
+        assertEquals(els.get(5), elsItem.get(5));
+        assertTrue(Integer.parseInt(els.get(6)) >= 600);
+        assertTrue(Integer.parseInt(elsItem.get(6)) >= 600);
 
         driver.quit();
     }
 
     @Test
     public void IETest(){
-        //create driver
         InternetExplorerDriverManager.getInstance().setup();
         WebDriver driver = new InternetExplorerDriver();
         driver.get("http://localhost/litecart");
-        //get all the needed attributes' values on the main page
-        String productNameMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[2]")).getAttribute("textContent");
-        String regularPriceMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getAttribute("textContent");
-        String discountPriceMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getAttribute("textContent");
-        String regularPriceColorMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getCssValue("color");
-        String regularPriceStrikeThroughMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/s")).getCssValue("text-decoration");
-        String discountPriceColorMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getCssValue("color");
-        String discountPriceBoldMP = driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[4]/strong")).getCssValue("font-weight");
-        //click on the item
+        List<String> els = getMainPageElements(driver);
         driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[1]/img")).click();
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        //get all the needed attributes' values on the item page
-        String productNameIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[1]/h1")).getAttribute("textContent");
-        String regularPriceIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getAttribute("textContent");
-        String discountPriceIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getAttribute("textContent");
-        String regularPriceColorIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getCssValue("color");
-        String regularPriceStrikeThroughIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/s")).getCssValue("text-decoration");
-        String discountPriceColorIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getCssValue("color");
-        String discountPriceBoldIP = driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[2]/strong")).getCssValue("font-weight");
+        List<String> elsItem = getItemPageElements(driver);
 
-        assertEquals(productNameMP, productNameIP);
-        assertEquals(regularPriceMP, regularPriceIP);
-        assertEquals(discountPriceMP, discountPriceIP);
-        assertEquals("rgba(119, 119, 119, 1)", regularPriceColorMP);
-        assertEquals("rgba(102, 102, 102, 1)", regularPriceColorIP);
-        assertTrue(regularPriceStrikeThroughMP.contains("line-through"));
-        assertTrue(regularPriceStrikeThroughIP.contains("line-through"));
-        assertEquals(discountPriceColorMP, discountPriceColorIP);
-        assertTrue(Integer.parseInt(discountPriceBoldMP) >= 600);
-        assertTrue(Integer.parseInt(discountPriceBoldIP) >= 600);
+        assertEquals(els.get(0), elsItem.get(0));
+        assertEquals(els.get(1), elsItem.get(1));
+        assertEquals(els.get(2), elsItem.get(2));
+        assertEquals("rgba(119, 119, 119, 1)", els.get(3));
+        assertEquals("rgba(102, 102, 102, 1)", elsItem.get(3));
+        assertTrue(els.get(4).contains("line-through"));
+        assertTrue(elsItem.get(4).contains("line-through"));
+        assertEquals(els.get(5), elsItem.get(5));
+        assertTrue(Integer.parseInt(els.get(6)) >= 600);
+        assertTrue(Integer.parseInt(elsItem.get(6)) >= 600);
 
         driver.quit();
+    }
+
+    private List<String> getMainPageElements(WebDriver driver){
+        WebElement nameMain = driver.findElement(By.xpath("//*[@id='box-campaigns']//div[2]"));
+        WebElement regularPriceMain = driver.findElement(By.xpath("//*[@id='box-campaigns']//s"));
+        WebElement discountPriceMain = driver.findElement(By.xpath("//*[@id='box-campaigns']//strong"));
+        String productNameMP = nameMain.getAttribute("textContent");
+        String regularPriceMP = regularPriceMain.getAttribute("textContent");
+        String discountPriceMP = discountPriceMain.getAttribute("textContent");
+        String regularPriceColorMP = regularPriceMain.getCssValue("color");
+        String regularPriceStrikeThroughMP = regularPriceMain.getCssValue("text-decoration");
+        String discountPriceColorMP = discountPriceMain.getCssValue("color");
+        String discountPriceBoldMP = discountPriceMain.getCssValue("font-weight");
+        return Arrays.asList(productNameMP, regularPriceMP, discountPriceMP, regularPriceColorMP, regularPriceStrikeThroughMP, discountPriceColorMP, discountPriceBoldMP);
+    }
+
+    private List<String> getItemPageElements(WebDriver driver){
+        WebElement nameItem = driver.findElement(By.xpath("//*[@id=\"box-product\"]//h1"));
+        WebElement regularPriceItem = driver.findElement(By.xpath("//*[@id=\"box-product\"]//s"));
+        WebElement discountPriceItem = driver.findElement(By.xpath("//*[@id=\"box-product\"]//strong"));
+        String productNameIP = nameItem.getAttribute("textContent");
+        String regularPriceIP = regularPriceItem.getAttribute("textContent");
+        String discountPriceIP = discountPriceItem.getAttribute("textContent");
+        String regularPriceColorIP = regularPriceItem.getCssValue("color");
+        String regularPriceStrikeThroughIP = regularPriceItem.getCssValue("text-decoration");
+        String discountPriceColorIP = discountPriceItem.getCssValue("color");
+        String discountPriceBoldIP = discountPriceItem.getCssValue("font-weight");
+        return Arrays.asList(productNameIP, regularPriceIP, discountPriceIP, regularPriceColorIP, regularPriceStrikeThroughIP, discountPriceColorIP, discountPriceBoldIP);
     }
 }
