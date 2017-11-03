@@ -25,6 +25,8 @@ public class Task06 {
         String quantity = driver.findElement(By.cssSelector("#cart > a.content > span.quantity")).getAttribute("textContent");
 
         assertEquals("0", quantity);
+
+        driver.quit();
     }
 
     private void addPopItem(WebDriver driver) {

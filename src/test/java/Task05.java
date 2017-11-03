@@ -63,7 +63,7 @@ public class Task05 {
 
         assertTrue(isPresent);
 
-
+        driver.quit();
     }
 
 
