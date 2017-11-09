@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 public class Task04 {
 
-    public WebDriver driver;
+    private WebDriver driver;
 
     @Test
     public void chromeTest() {

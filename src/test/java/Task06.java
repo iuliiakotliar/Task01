@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 public class Task06 {
 
-    public WebDriver driver;
+    private WebDriver driver;
 
     @Test
     public void cartOperation(){

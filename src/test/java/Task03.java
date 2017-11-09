@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class Task03 {
 
-    public WebDriver driver;
+    private WebDriver driver;
 
     @Test
     public void getEls() {

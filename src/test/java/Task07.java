@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Task07 {
-    public WebDriver driver;
+    private WebDriver driver;
 
     @Test
     public void linksAreOpened() {
@@ -45,7 +45,7 @@ public class Task07 {
         driver.quit();
     }
 
-    public ExpectedCondition<String> anyWindowOtherThan(Set<String> windows) {
+    private ExpectedCondition<String> anyWindowOtherThan(Set<String> windows) {
         return (WebDriver input) -> {
             Set<String> handles = driver.getWindowHandles();
             handles.removeAll(windows);
