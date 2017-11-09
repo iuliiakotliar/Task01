@@ -19,9 +19,9 @@ public class Task03 {
         driver = new ChromeDriver();
         driver.get("http://localhost/litecart/admin");
         //log into the admin area
-        driver.findElement(By.xpath("//*[@id=\"box-login\"]//tr[1]/td[2]/span/input")).sendKeys("admin");
-        driver.findElement(By.xpath("//*[@id=\"box-login\"]//tr[2]/td[2]/span/input")).sendKeys("admin");
-        driver.findElement(By.xpath("//*[@id=\"box-login\"]//button")).click();
+        driver.findElement(By.name("username")).sendKeys("admin");
+        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("login")).click();
         int countEls = driver.findElements(By.xpath("//*[@id=\"app-\"]")).size();
         //iterate over menu items
         for (int i = 0; i <= countEls-1; i++) {

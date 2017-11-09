@@ -41,11 +41,11 @@ public class Task06 {
         while(iteration < 3){
             driver.findElement(By.xpath("//*[@id=\"box-most-popular\"]//img")).click();
             if (driver.findElements(By.className("options")).size() > 0){
-                new Select(driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[5]/form/table/tbody/tr[1]/td/select"))).selectByVisibleText("Small");
+                new Select(driver.findElement(By.name("options[Size]"))).selectByVisibleText("Small");
             }
-            driver.findElement(By.xpath("//*[@id=\"box-product\"]/div[2]/div[2]/div[5]/form/table/tbody/tr/td/button")).click();
+            driver.findElement(By.name("add_cart_product")).click();
             WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.attributeToBe(driver.findElement(By.cssSelector("#cart > a.content > span.quantity")), "textContent", counter.toString()));
+            wait.until(ExpectedConditions.attributeToBe(driver.findElement(By.className("quantity")), "textContent", counter.toString()));
             driver.findElement(By.xpath("//*[@id=\"site-menu\"]/ul/li[1]/a")).click();
             iteration++;
             counter++;
@@ -58,8 +58,8 @@ public class Task06 {
         List<WebElement> els = driver.findElements(By.xpath("//*[contains(@id, 'order_confirmation-wrapper')]"));
 
         while(els.size() > 0){
-            WebElement element = driver.findElement(By.xpath("//*[@id=\"order_confirmation-wrapper\"]/table"));
-            driver.findElement(By.xpath("//button[@name='remove_cart_item']")).click();
+            WebElement element = driver.findElement(By.id("order_confirmation-wrapper"));
+            driver.findElement(By.name("remove_cart_item")).click();
             wait.until(ExpectedConditions.stalenessOf(element));
             els = driver.findElements(By.xpath("//*[contains(@id, 'order_confirmation-wrapper')]"));
         }

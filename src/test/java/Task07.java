@@ -19,9 +19,9 @@ public class Task07 {
         ChromeDriverManager.getInstance().setup();
         driver = new ChromeDriver();
         driver.get("http://localhost/litecart/admin");
-        driver.findElement(By.xpath("//*[@id=\"box-login\"]//tr[1]/td[2]/span/input")).sendKeys("admin");
-        driver.findElement(By.xpath("//*[@id=\"box-login\"]//tr[2]/td[2]/span/input")).sendKeys("admin");
-        driver.findElement(By.xpath("//*[@id=\"box-login\"]//button")).click();
+        driver.findElement(By.name("username")).sendKeys("admin");
+        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("login")).click();
         driver.get("http://localhost/litecart/admin/?app=countries&doc=countries");
         driver.findElement(By.xpath("//*[@id=\"content\"]/div/a")).click();
 
