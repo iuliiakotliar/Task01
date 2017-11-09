@@ -1,6 +1,7 @@
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
+import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,18 +9,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class Task04 {
 
+    public WebDriver driver;
+
     @Test
     public void chromeTest() {
         ChromeDriverManager.getInstance().setup();
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.get("http://localhost/litecart");
         List<String> els = getMainPageElements(driver);
         driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]//img")).click();
@@ -34,14 +39,12 @@ public class Task04 {
         assertTrue(elsItem.get(4).contains("line-through"));
         assertEquals(els.get(5), elsItem.get(5));
         assertEquals(els.get(6), elsItem.get(6));
-
-        driver.quit();
     }
 
     @Test
-    public void firefoxTest(){
+    public void firefoxTest() {
         FirefoxDriverManager.getInstance().setup();
-        WebDriver driver = new FirefoxDriver();
+        driver = new FirefoxDriver();
         driver.get("http://localhost/litecart");
         List<String> els = getMainPageElements(driver);
         driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[1]/img")).click();
@@ -57,14 +60,12 @@ public class Task04 {
         assertEquals(els.get(5), elsItem.get(5));
         assertTrue(Integer.parseInt(els.get(6)) >= 600);
         assertTrue(Integer.parseInt(elsItem.get(6)) >= 600);
-
-        driver.quit();
     }
 
     @Test
-    public void IETest(){
+    public void IETest() {
         InternetExplorerDriverManager.getInstance().setup();
-        WebDriver driver = new InternetExplorerDriver();
+        driver = new InternetExplorerDriver();
         driver.get("http://localhost/litecart");
         List<String> els = getMainPageElements(driver);
         driver.findElement(By.xpath("//*[@id=\"box-campaigns\"]/div/ul/li/a[1]/div[1]/img")).click();
@@ -82,10 +83,14 @@ public class Task04 {
         assertTrue(Integer.parseInt(els.get(6)) >= 600);
         assertTrue(Integer.parseInt(elsItem.get(6)) >= 600);
 
+    }
+
+    @After
+    public void stop(){
         driver.quit();
     }
 
-    private List<String> getMainPageElements(WebDriver driver){
+    private List<String> getMainPageElements(WebDriver driver) {
         WebElement nameMain = driver.findElement(By.xpath("//*[@id='box-campaigns']//div[2]"));
         WebElement regularPriceMain = driver.findElement(By.xpath("//*[@id='box-campaigns']//s"));
         WebElement discountPriceMain = driver.findElement(By.xpath("//*[@id='box-campaigns']//strong"));
@@ -99,7 +104,7 @@ public class Task04 {
         return Arrays.asList(productNameMP, regularPriceMP, discountPriceMP, regularPriceColorMP, regularPriceStrikeThroughMP, discountPriceColorMP, discountPriceBoldMP);
     }
 
-    private List<String> getItemPageElements(WebDriver driver){
+    private List<String> getItemPageElements(WebDriver driver) {
         WebElement nameItem = driver.findElement(By.xpath("//*[@id=\"box-product\"]//h1"));
         WebElement regularPriceItem = driver.findElement(By.xpath("//*[@id=\"box-product\"]//s"));
         WebElement discountPriceItem = driver.findElement(By.xpath("//*[@id=\"box-product\"]//strong"));
