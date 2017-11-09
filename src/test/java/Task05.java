@@ -1,4 +1,5 @@
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,15 +11,16 @@ import java.io.File;
 import static org.junit.Assert.assertTrue;
 
 public class Task05 {
+    public WebDriver driver;
 
     @Test
     public void addItem(){
         ChromeDriverManager.getInstance().setup();
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.get("http://localhost/litecart/admin");
-        driver.findElement(By.xpath("//*[@id='box-login']//tr[1]/td[2]/span/input")).sendKeys("admin");
-        driver.findElement(By.xpath("//*[@id='box-login']//tr[2]/td[2]/span/input")).sendKeys("admin");
-        driver.findElement(By.xpath("//*[@id='box-login']//button")).click();
+        driver.findElement(By.xpath("//*[@id=\"box-login\"]//tr[1]/td[2]/span/input")).sendKeys("admin");
+        driver.findElement(By.xpath("//*[@id=\"box-login\"]//tr[2]/td[2]/span/input")).sendKeys("admin");
+        driver.findElement(By.xpath("//*[@id=\"box-login\"]//button")).click();
         driver.findElement(By.xpath("//*[@id='app-'][2]/a/span")).click();
         driver.findElement(By.xpath("//*[@id=\"content\"]/div[1]/a[2]/i")).click();
         //general tab
@@ -62,9 +64,10 @@ public class Task05 {
         Boolean isPresent = driver.findElements(By.linkText("My Duck")).size() > 0;
 
         assertTrue(isPresent);
-
-        driver.quit();
     }
 
-
+    @After
+    public void stop(){
+        driver.quit();
+    }
 }
