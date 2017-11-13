@@ -1,7 +1,6 @@
 package com.last.task.tests;
 
 import com.last.task.app.Application;
-import com.last.task.app.Application;
 import org.junit.Before;
 
 public class TestBase {
