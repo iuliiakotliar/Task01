@@ -12,8 +12,7 @@ public class Task09 extends TestBase{
         app.checkoutPage.open();
         app.removeEachItem();
         app.homePage.open();
-        String actualValue = app.homePage.getQuantity();
 
-        assertEquals("0", actualValue);
+        assertEquals("0", app.homePage.getQuantity());
     }
 }
