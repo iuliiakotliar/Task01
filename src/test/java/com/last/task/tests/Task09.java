@@ -9,7 +9,6 @@ public class Task09 extends TestBase{
     public void cartOperation(){
         app.homePage.open();
         app.addPopItem();
-        app.checkoutPage.open();
         app.removeEachItem();
         app.homePage.open();
 

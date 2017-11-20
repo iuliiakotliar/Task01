@@ -1,5 +1,6 @@
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,13 +17,16 @@ public class Task06 {
 
     private WebDriver driver;
 
-    @Test
-    public void cartOperation(){
+    @Before
+    public void start(){
         ChromeDriverManager.getInstance().setup();
         driver = new ChromeDriver();
+    }
+
+    @Test
+    public void cartOperation(){
         driver.get("http://localhost/litecart");
         addPopItem();
-        driver.findElement(By.xpath("//*[@id=\"cart\"]/a[3]")).click();
         removeEachItem();
         driver.findElement(By.xpath("//*[@id=\"site-menu\"]/ul/li[1]/a")).click();
         String quantity = driver.findElement(By.cssSelector("#cart > a.content > span.quantity")).getAttribute("textContent");
@@ -46,6 +50,7 @@ public class Task06 {
             driver.findElement(By.name("add_cart_product")).click();
             WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.attributeToBe(driver.findElement(By.className("quantity")), "textContent", counter.toString()));
+            assertEquals(counter.toString(), driver.findElement(By.className("quantity")).getAttribute("textContent"));
             driver.findElement(By.xpath("//*[@id=\"site-menu\"]/ul/li[1]/a")).click();
             iteration++;
             counter++;
@@ -53,6 +58,8 @@ public class Task06 {
     }
 
     private void removeEachItem(){
+        String beforeQuantity = driver.findElement(By.cssSelector("#cart > a.content > span.quantity")).getAttribute("textContent");
+        driver.findElement(By.xpath("//*[@id=\"cart\"]/a[3]")).click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         List<WebElement> els = driver.findElements(By.xpath("//*[contains(@id, 'order_confirmation-wrapper')]"));
@@ -61,7 +68,12 @@ public class Task06 {
             WebElement element = driver.findElement(By.id("order_confirmation-wrapper"));
             driver.findElement(By.name("remove_cart_item")).click();
             wait.until(ExpectedConditions.stalenessOf(element));
+            driver.findElement(By.xpath("//*[@id=\"site-menu\"]/ul/li[1]/a")).click();
+            String afterQuantity = driver.findElement(By.cssSelector("#cart > a.content > span.quantity")).getAttribute("textContent");
+            assertEquals(Integer.parseInt(beforeQuantity) - 1, Integer.parseInt(afterQuantity));
+            driver.findElement(By.xpath("//*[@id=\"cart\"]/a[3]")).click();
             els = driver.findElements(By.xpath("//*[contains(@id, 'order_confirmation-wrapper')]"));
+            beforeQuantity = String.valueOf((Integer.parseInt(beforeQuantity) - 1));
         }
     }
 }

@@ -28,10 +28,8 @@ public class Task03 {
             List<WebElement> elements = driver.findElements(By.xpath("//*[@id=\"app-\"]"));
             elements.get(i).click();
             List<WebElement> els = driver.findElements(By.xpath("//*[contains(@id, 'doc-')]"));
-            //if no submenus - check that page header is present
-            if (els.size()==0){
-                assertTrue(driver.findElements(By.tagName("H1")).size() > 0);
-            }
+            //check that page header is present
+            assertTrue(driver.findElements(By.tagName("H1")).size() > 0);
             //iterate over submenu items and check that header is present for them
             for (int j = 0; j <= els.size()-1; j++) {
                 List<WebElement> newEls = driver.findElements(By.xpath("//*[contains(@id, 'doc-')]"));
