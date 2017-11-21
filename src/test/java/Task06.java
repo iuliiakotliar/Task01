@@ -76,4 +76,5 @@ public class Task06 {
             beforeQuantity = String.valueOf((Integer.parseInt(beforeQuantity) - 1));
         }
     }
+
 }
