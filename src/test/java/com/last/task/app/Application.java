@@ -34,17 +34,17 @@ public class Application {
         driver.quit();
     }
 
-    public void addPopItem(Integer counter) {
+    public void addPopularItem(Integer expectedCountInCart) {
         itemPage.open();
         if (driver.findElements(By.className("options")).size() > 0){
                 new Select(driver.findElement(By.name("options[Size]"))).selectByVisibleText("Small");
         }
         driver.findElement(By.name("add_cart_product")).click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.attributeToBe(driver.findElement(By.className("quantity")), "textContent", counter.toString()));
+        wait.until(ExpectedConditions.attributeToBe(driver.findElement(By.className("quantity")), "textContent", expectedCountInCart.toString()));
     }
 
-    public void removeEachItem(){
+    public void removeOneItem(){
         checkoutPage.open();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);

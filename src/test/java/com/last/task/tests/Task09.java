@@ -11,16 +11,14 @@ public class Task09 extends TestBase{
         app.homePage.open();
 
         for (Integer i=1; i<4; i++) {
-            app.addPopItem(i);
+            app.addPopularItem(i);
             assertEquals(i.toString(),app.getNumberOfProductsInCart());
         }
-
         while (app.isCartEmpty()){
             String beforeQuantity = app.getNumberOfProductsInCart();
-            app.removeEachItem();
+            app.removeOneItem();
             assertNotEquals(beforeQuantity, app.getNumberOfProductsInCart());
         }
-
         assertEquals("0", app.getNumberOfProductsInCart());
     }
 }
