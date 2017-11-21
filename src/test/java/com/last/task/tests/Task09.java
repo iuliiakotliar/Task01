@@ -8,8 +8,6 @@ import static org.junit.Assert.assertNotEquals;
 public class Task09 extends TestBase{
     @Test
     public void cartOperation(){
-        app.homePage.open();
-
         for (Integer i=1; i<4; i++) {
             app.addPopularItem(i);
             assertEquals(i.toString(),app.getNumberOfProductsInCart());

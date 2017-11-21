@@ -35,6 +35,7 @@ public class Application {
     }
 
     public void addPopularItem(Integer expectedCountInCart) {
+        homePage.open();
         itemPage.open();
         if (driver.findElements(By.className("options")).size() > 0){
                 new Select(driver.findElement(By.name("options[Size]"))).selectByVisibleText("Small");
