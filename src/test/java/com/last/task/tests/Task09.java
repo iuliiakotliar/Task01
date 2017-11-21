@@ -18,7 +18,6 @@ public class Task09 extends TestBase{
         while (app.isCartEmpty()){
             String beforeQuantity = app.getNumberOfProductsInCart();
             app.removeEachItem();
-            app.isCartEmpty();
             assertNotEquals(beforeQuantity, app.getNumberOfProductsInCart());
         }
 

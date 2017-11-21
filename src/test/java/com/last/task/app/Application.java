@@ -14,15 +14,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertEquals;
-
 public class Application {
 
     private WebDriver driver;
 
-    public CheckoutPage checkoutPage;
+    private CheckoutPage checkoutPage;
     public HomePage homePage;
-    public ItemPage itemPage;
+    private ItemPage itemPage;
 
     public Application(){
         ChromeDriverManager.getInstance().setup();
@@ -57,8 +55,7 @@ public class Application {
 
     public String getNumberOfProductsInCart(){
         homePage.open();
-        String quantity = driver.findElement(By.cssSelector("#cart > a.content > span.quantity")).getAttribute("textContent");
-        return quantity;
+        return driver.findElement(By.cssSelector("#cart > a.content > span.quantity")).getAttribute("textContent");
     }
 
     public boolean isCartEmpty(){
